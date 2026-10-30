@@ -1,0 +1,11 @@
+Build a single-file HTML/CSS/JavaScript to-do app.
+Requirements:
+- Add tasks with Enter key or a button
+- Edit and delete tasks
+- Mark tasks as complete
+- Filters: All / Active / Completed
+- Show the number of remaining tasks
+- Save everything in localStorage so it persists after refresh
+- Clean, simple UI
+- No external libraries
+Output only the complete code in one file.

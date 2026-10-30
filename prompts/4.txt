@@ -1,0 +1,374 @@
+You are acting as a senior full-stack software engineer, system architect, algorithm designer, and UI/UX specialist.
+
+Your mission is to independently design, implement, test, debug, and deliver a fully functional application called FlowForge Studio.
+
+This is an advanced coding benchmark. I will evaluate your actual implementation, not your plans or explanations.
+
+IMPORTANT: Do not stop after planning or generating a mockup. Build and run the actual application.
+
+PROJECT: FlowForge Studio
+
+Build a professional, local-first, visual workflow automation platform.
+
+Users should be able to create workflows by dragging nodes onto a canvas, connecting them, configuring their behavior, and executing workflows to process real data.
+
+Think of a lightweight visual automation tool, but build the core functionality yourself.
+
+1. TECHNICAL REQUIREMENTS
+
+React + TypeScript + Vite.
+
+Modern, modular architecture.
+
+Professional dark-mode interface.
+
+No backend or external API required.
+
+No authentication, subscriptions, or paid services.
+
+Data must persist locally.
+
+Use real application state, not hardcoded interface simulations.
+
+Do not use an existing complete workflow-builder implementation.
+
+You may use small UI and utility libraries where appropriate.
+
+Create the project inside a new mercury3-stress-test directory. Do not overwrite unrelated files.
+
+2. VISUAL WORKFLOW EDITOR
+
+Implement an interactive canvas supporting:
+
+Drag-and-drop node creation.
+
+Dragging and repositioning existing nodes.
+
+Connecting nodes through input/output ports.
+
+Curved SVG connections.
+
+Zoom and pan.
+
+Multi-node selection.
+
+Delete and duplicate nodes.
+
+Undo and redo.
+
+Keyboard shortcuts.
+
+Grid background.
+
+Fit-to-screen.
+
+Node configuration panel.
+
+Workflow validation.
+
+The UI must feel like an actual polished desktop application, not a basic HTML demo.
+
+3. FUNCTIONAL NODE TYPES
+
+Implement at least these seven functional node types:
+
+START
+Begins workflow execution.
+
+DATA SOURCE
+Generates or accepts structured JSON records.
+
+FILTER
+Filters records based on user-configurable conditions.
+
+TRANSFORM
+Maps, renames, calculates, or modifies record fields.
+
+CONDITION
+Routes records through True and False output connections.
+
+DELAY
+Introduces a configurable execution delay.
+
+OUTPUT
+Displays the processed results as an interactive table and JSON viewer.
+
+Each node must have working configuration controls.
+
+Every node must perform real operations. Decorative or nonfunctional nodes are unacceptable.
+
+4. EXECUTION ENGINE
+
+Build a real workflow execution engine with:
+
+Directed graph representation.
+
+Dependency resolution.
+
+Topological ordering.
+
+Cycle detection.
+
+Input validation.
+
+Deterministic execution.
+
+Asynchronous node support.
+
+Execution cancellation.
+
+Error propagation.
+
+Per-node execution status.
+
+Execution timestamps.
+
+Node-by-node execution history.
+
+Execution must visually animate through the workflow.
+
+Support these states:
+
+Pending, Running, Completed, Failed, Skipped.
+
+Prevent invalid connections and gracefully handle disconnected nodes.
+
+Never use unsafe JavaScript eval() for user-defined transformations.
+
+5. BUILT-IN DEMONSTRATION WORKFLOW
+
+Create a realistic workflow that ships with the application.
+
+Scenario: E-commerce order processing.
+
+Generate 300 deterministic sample orders containing:
+
+Order ID
+
+Customer
+
+Country
+
+Product
+
+Quantity
+
+Unit price
+
+Order date
+
+Order status
+
+The workflow should:
+
+Generate the orders.
+
+Filter orders based on configurable conditions.
+
+Calculate each order's total value.
+
+Separate high-value and regular orders.
+
+Process the two branches.
+
+Display the resulting datasets and statistics.
+
+The results must change correctly when the user modifies node settings.
+
+6. ANALYTICS DASHBOARD
+
+Include a collapsible analytics panel showing:
+
+Total input records.
+
+Successfully processed records.
+
+Filtered records.
+
+Branch distribution.
+
+Execution time.
+
+Per-node processing time.
+
+Workflow errors.
+
+Visual execution history.
+
+Use charts where appropriate.
+
+All analytics must be calculated from actual execution results.
+
+7. SAVE, LOAD, AND EXPORT
+
+Implement:
+
+Automatic local persistence.
+
+Multiple named workflows.
+
+Import workflow from JSON.
+
+Export workflow to JSON.
+
+Export processed data to CSV.
+
+Reset demo workflow.
+
+Undo/redo history for graph edits.
+
+Validate imported files before using them.
+
+8. ADVANCED EDGE CASES
+
+The application must handle:
+
+Empty datasets.
+
+Invalid filter conditions.
+
+Missing JSON fields.
+
+Disconnected nodes.
+
+Multiple output branches.
+
+Circular connections.
+
+Invalid transformation configurations.
+
+Large datasets.
+
+Cancellation during execution.
+
+Malformed imported workflows.
+
+Display meaningful error messages without crashing.
+
+9. UI/UX QUALITY
+
+The visual design should be suitable for a premium commercial product.
+
+Requirements:
+
+Clean typography.
+
+Consistent spacing.
+
+Dark charcoal background.
+
+Subtle blue and orange accents.
+
+Smooth but restrained animations.
+
+Professional icons.
+
+Clear execution status indicators.
+
+Responsive panels.
+
+Intuitive configuration controls.
+
+Polished empty states.
+
+Useful tooltips.
+
+No generic AI illustrations.
+
+The application should look impressive immediately when opened.
+
+10. AUTOMATED TESTING
+
+Write automated tests that verify actual application behavior.
+
+At minimum, test:
+
+Correct graph ordering.
+
+Cycle detection.
+
+Invalid connection rejection.
+
+Filtering accuracy.
+
+Transformation accuracy.
+
+Conditional branching.
+
+Empty dataset handling.
+
+Workflow JSON serialization.
+
+Invalid import handling.
+
+Cancellation behavior.
+
+Do not write fake tests that always pass.
+
+11. SELF-DEBUGGING REQUIREMENT
+
+After implementing the project:
+
+Install required dependencies.
+
+Run the TypeScript compiler.
+
+Execute automated tests.
+
+Fix any errors discovered.
+
+Start the application.
+
+Verify the actual interface if browser access is available.
+
+Test the provided demonstration workflow.
+
+Confirm that output values are mathematically correct.
+
+Ensure the project can be started again reliably.
+
+Do not claim a test passed unless you actually executed it.
+
+12. DELIVERY REQUIREMENTS
+
+Deliver:
+
+Complete source code.
+
+Fully operational application.
+
+Working demonstration workflow.
+
+Automated tests.
+
+Clear instructions to launch it.
+
+A concise final report.
+
+The report must include:
+
+Implemented features.
+
+Features that remain incomplete.
+
+Test results.
+
+Known limitations.
+
+Architectural decisions.
+
+Actual execution time if measurable.
+
+FINAL INSTRUCTIONS
+
+Work autonomously. Make reasonable engineering decisions without asking me unnecessary questions.
+
+Prioritize correctness, functionality, and visual quality.
+
+If a complex feature cannot be completed reliably, implement a smaller working version and disclose the limitation rather than pretending it works.
+
+Do not spend the entire task writing explanations.
+
+I want working software, not a prototype, design document, or collection of disconnected components.
+
+Start implementing immediately.

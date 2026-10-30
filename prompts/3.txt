@@ -1,0 +1,10 @@
+Create a single-file browser Snake game using HTML5 canvas and vanilla JavaScript.
+Requirements:
+- Controls: arrow keys and WASD
+- Score display
+- High score saved in localStorage
+- Speed increases every 5 points
+- Space key pauses and resumes
+- Game over screen with a restart button
+- No external libraries
+Output only the complete code in one file.

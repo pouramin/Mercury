@@ -1,0 +1,11 @@
+Create a single-file index.html landing page for a fictional specialty coffee shop called "Tunnel Coffee".
+Requirements:
+- Responsive layout that works on mobile and desktop
+- Dark theme
+- Hero section with a headline and a call-to-action button
+- Menu section with 6 items and prices
+- Opening hours section
+- Contact form with client-side validation in JavaScript (no backend)
+- Smooth scroll navigation
+- No external libraries or CDNs
+Output only the complete HTML code in one file.
