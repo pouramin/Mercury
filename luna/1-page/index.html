@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#151613">
+  <meta name="description" content="Tunnel Coffee — carefully sourced coffee, slow mornings, and good company in the heart of the city.">
+  <title>Tunnel Coffee — Find your way to good coffee</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --ink: #f4f0e7;
+      --muted: #a8a397;
+      --bg: #151613;
+      --panel: #1e201b;
+      --line: rgba(244, 240, 231, .15);
+      --accent: #d6a56d;
+      --accent-bright: #e7bd8b;
+      --serif: Georgia, 'Times New Roman', serif;
+      --sans: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 88px; }
+    body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--sans); line-height: 1.6; }
+    a { color: inherit; text-decoration: none; }
+    button, input, textarea { font: inherit; }
+    .wrap { width: min(1120px, calc(100% - 48px)); margin-inline: auto; }
+    .eyebrow { color: var(--accent-bright); text-transform: uppercase; letter-spacing: .2em; font-size: .72rem; font-weight: 700; }
+    .site-header { position: sticky; top: 0; z-index: 10; background: rgba(21,22,19,.92); backdrop-filter: blur(14px); border-bottom: 1px solid var(--line); }
+    .nav { min-height: 76px; display: flex; justify-content: space-between; align-items: center; gap: 24px; }
+    .brand { display: inline-flex; align-items: center; gap: 11px; font-weight: 750; letter-spacing: .02em; }
+    .brand-mark { width: 31px; height: 31px; border: 1px solid var(--accent); border-radius: 50%; display: grid; place-items: center; color: var(--accent); font-family: var(--serif); font-size: 1.1rem; }
+    .nav-links { display: flex; align-items: center; gap: clamp(18px, 3vw, 34px); color: #d5d0c6; font-size: .9rem; }
+    .nav-links a { transition: color .2s ease; }
+    .nav-links a:hover, .nav-links a:focus-visible { color: var(--accent-bright); }
+    .nav-cta { border: 1px solid var(--line); padding: 9px 16px; border-radius: 999px; }
+    .hero { min-height: min(760px, calc(100svh - 76px)); display: grid; align-items: center; position: relative; overflow: hidden; isolation: isolate; border-bottom: 1px solid var(--line); }
+    .hero::before { content: ''; position: absolute; z-index: -2; inset: 0; background: radial-gradient(ellipse at 75% 50%, rgba(131,91,54,.2), transparent 42%), linear-gradient(90deg, #151613 8%, rgba(21,22,19,.92) 48%, rgba(21,22,19,.48)), repeating-linear-gradient(90deg, transparent 0 95px, rgba(214,165,109,.035) 96px 97px); }
+    .hero::after { content: 'TC'; position: absolute; z-index: -1; right: 7%; top: 50%; transform: translateY(-50%); font: clamp(15rem, 37vw, 34rem)/.8 var(--serif); color: rgba(214,165,109,.045); letter-spacing: -.12em; }
+    .hero-content { max-width: 680px; padding-block: 100px; }
+    h1, h2, h3, p { margin-top: 0; }
+    h1 { font: 400 clamp(3.5rem, 8.5vw, 7rem)/.97 var(--serif); letter-spacing: -.055em; margin: 22px 0 26px; }
+    h1 em { color: var(--accent); font-weight: 400; }
+    .hero-copy { color: #c2bdb2; max-width: 460px; font-size: 1.05rem; margin-bottom: 34px; }
+    .button { display: inline-flex; align-items: center; justify-content: center; gap: 12px; padding: 13px 21px; background: var(--accent); color: #201a13; border: 1px solid var(--accent); border-radius: 3px; font-weight: 750; cursor: pointer; transition: background .2s, transform .2s; }
+    .button:hover { background: var(--accent-bright); transform: translateY(-2px); }
+    .button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visible { outline: 2px solid var(--accent-bright); outline-offset: 3px; }
+    .hero-note { display: inline-block; margin-left: 20px; color: var(--muted); font-size: .85rem; }
+    section { padding: 110px 0; }
+    .section-head { display: flex; justify-content: space-between; align-items: end; gap: 30px; margin-bottom: 44px; }
+    h2 { font: 400 clamp(2.5rem, 5vw, 4rem)/1.04 var(--serif); letter-spacing: -.04em; margin: 12px 0 0; }
+    .section-intro { max-width: 340px; color: var(--muted); margin: 0; }
+    .menu-section { background: #191a16; }
+    .menu-grid { display: grid; grid-template-columns: repeat(2, 1fr); column-gap: 60px; }
+    .menu-item { display: flex; justify-content: space-between; gap: 20px; padding: 23px 0; border-top: 1px solid var(--line); }
+    .menu-item h3 { font: 400 1.35rem var(--serif); margin: 0 0 5px; }
+    .menu-item p { color: var(--muted); font-size: .88rem; margin: 0; }
+    .price { color: var(--accent-bright); font-weight: 700; white-space: nowrap; padding-top: 2px; }
+    .hours-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+    .hours-card { border: 1px solid var(--line); padding: 30px clamp(22px, 5vw, 48px); background: linear-gradient(140deg, #20211c, #181915); }
+    .hours-row { display: flex; justify-content: space-between; gap: 20px; padding: 14px 0; border-bottom: 1px solid var(--line); color: #d6d1c7; }
+    .hours-row:last-child { border: 0; }
+    .hours-row span:last-child { color: var(--accent-bright); }
+    .location-note { color: var(--muted); max-width: 400px; }
+    .location-note strong { display: block; font: 400 1.6rem var(--serif); color: var(--ink); margin: 26px 0 8px; }
+    .contact-section { background: #191a16; }
+    .contact-grid { display: grid; grid-template-columns: .85fr 1.15fr; gap: 80px; }
+    .contact-copy p { color: var(--muted); max-width: 360px; }
+    .contact-details { margin-top: 30px; color: #d6d1c7; font-size: .95rem; }
+    .contact-details div { margin: 8px 0; }
+    .contact-details span { color: var(--accent-bright); display: inline-block; width: 78px; }
+    form { display: grid; gap: 18px; }
+    .field { display: grid; gap: 7px; }
+    label { font-size: .85rem; color: #d6d1c7; }
+    input, textarea { width: 100%; color: var(--ink); background: #22231e; border: 1px solid var(--line); border-radius: 2px; padding: 12px 14px; }
+    input::placeholder, textarea::placeholder { color: #77766d; }
+    textarea { min-height: 130px; resize: vertical; }
+    .form-status { min-height: 1.5em; margin: 0; font-size: .9rem; }
+    .form-status.success { color: #b8d59b; }
+    .form-status.error { color: #f0a18f; }
+    footer { padding: 25px 0; color: var(--muted); font-size: .82rem; }
+    .footer-inner { display: flex; justify-content: space-between; gap: 20px; }
+    @media (max-width: 720px) {
+      .wrap { width: min(100% - 36px, 560px); }
+      .nav { min-height: 68px; }
+      .nav-links { gap: 15px; font-size: .8rem; }
+      .nav-links .nav-cta { display: none; }
+      .hero { min-height: 650px; }
+      .hero-content { padding-block: 82px; }
+      .hero::after { right: -10%; top: 58%; }
+      section { padding: 78px 0; }
+      .section-head { display: block; margin-bottom: 32px; }
+      .section-intro { margin-top: 18px; }
+      .menu-grid { grid-template-columns: 1fr; }
+      .hours-grid, .contact-grid { grid-template-columns: 1fr; gap: 38px; }
+    }
+    @media (max-width: 420px) {
+      .wrap { width: calc(100% - 30px); }
+      .brand { font-size: .9rem; gap: 8px; }
+      .brand-mark { width: 28px; height: 28px; }
+      .nav-links { gap: 11px; font-size: .75rem; }
+      h1 { font-size: clamp(3.1rem, 17vw, 4.3rem); }
+      .hero-note { display: block; margin: 16px 0 0; }
+      .footer-inner { display: block; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { transition-duration: .01ms !important; }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <nav class="nav wrap" aria-label="Main navigation">
+      <a class="brand" href="#home" aria-label="Tunnel Coffee home"><span class="brand-mark" aria-hidden="true">T</span><span>TUNNEL COFFEE</span></a>
+      <div class="nav-links">
+        <a href="#menu">Menu</a>
+        <a href="#visit">Visit</a>
+        <a href="#contact" class="nav-cta">Say hello</a>
+      </div>
+    </nav>
+  </header>
+  <main>
+    <section class="hero" id="home">
+      <div class="wrap hero-content">
+        <div class="eyebrow">A little further from ordinary</div>
+        <h1>Find your way<br>to <em>good coffee.</em></h1>
+        <p class="hero-copy">Thoughtfully sourced beans, dialed-in brews, and a warm corner to make your own. Your daily detour starts here.</p>
+        <a class="button" href="#menu">Explore the menu <span aria-hidden="true">↗</span></a>
+        <span class="hero-note">Roasted with intention. Served with care.</span>
+      </div>
+    </section>
+    <section class="menu-section" id="menu">
+      <div class="wrap">
+        <div class="section-head">
+          <div><div class="eyebrow">Made to linger</div><h2>The menu</h2></div>
+          <p class="section-intro">Good beans, good ingredients, no shortcuts. Find your familiar or try something new.</p>
+        </div>
+        <div class="menu-grid">
+          <article class="menu-item"><div><h3>Espresso</h3><p>House blend, rich and balanced</p></div><span class="price">€2.80</span></article>
+          <article class="menu-item"><div><h3>Flat White</h3><p>Double espresso, silky steamed milk</p></div><span class="price">€3.80</span></article>
+          <article class="menu-item"><div><h3>Filter of the Day</h3><p>Single origin, brewed to bring out its best</p></div><span class="price">€4.20</span></article>
+          <article class="menu-item"><div><h3>Honey Oat Latte</h3><p>Espresso, oat milk, a little local honey</p></div><span class="price">€4.60</span></article>
+          <article class="menu-item"><div><h3>Cold Brew</h3><p>Slow-steeped for 18 hours, served over ice</p></div><span class="price">€4.00</span></article>
+          <article class="menu-item"><div><h3>Mocha</h3><p>Dark chocolate, espresso, steamed milk</p></div><span class="price">€4.50</span></article>
+        </div>
+      </div>
+    </section>
+    <section id="visit">
+      <div class="wrap hours-grid">
+        <div><div class="eyebrow">Come on in</div><h2>Good coffee,<br>good timing.</h2><p class="location-note">Drop by for your morning ritual, a midday reset, or one last cup before heading home.<strong>Via del Porto 18</strong>Trastevere, Roma 00153</p></div>
+        <div class="hours-card" aria-label="Opening hours">
+          <div class="eyebrow">Opening hours</div>
+          <div class="hours-row"><span>Monday – Friday</span><span>07:30 – 18:00</span></div>
+          <div class="hours-row"><span>Saturday</span><span>08:30 – 18:00</span></div>
+          <div class="hours-row"><span>Sunday</span><span>09:00 – 16:00</span></div>
+        </div>
+      </div>
+    </section>
+    <section class="contact-section" id="contact">
+      <div class="wrap contact-grid">
+        <div class="contact-copy"><div class="eyebrow">We'd love to hear from you</div><h2>Say hello.</h2><p>Have a question, a kind word, or an idea for a collaboration? Send us a note and we'll get back to you soon.</p><div class="contact-details"><div><span>Email</span> hello@tunnelcoffee.it</div><div><span>Instagram</span> @tunnelcoffee</div></div></div>
+        <form id="contact-form" novalidate>
+          <div class="field"><label for="name">Your name</label><input id="name" name="name" type="text" autocomplete="name" placeholder="Name" required minlength="2"></div>
+          <div class="field"><label for="email">Email address</label><input id="email" name="email" type="email" autocomplete="email" placeholder="you@example.com" required></div>
+          <div class="field"><label for="message">Your message</label><textarea id="message" name="message" placeholder="What's on your mind?" required minlength="10"></textarea></div>
+          <button class="button" type="submit">Send your note <span aria-hidden="true">↗</span></button>
+          <p class="form-status" id="form-status" role="status" aria-live="polite"></p>
+        </form>
+      </div>
+    </section>
+  </main>
+  <footer><div class="wrap footer-inner"><span>© <span id="year"></span> Tunnel Coffee. Made for the everyday.</span><span>Roma, Italia · Specialty coffee, always.</span></div></footer>
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+    const form = document.getElementById('contact-form');
+    const status = document.getElementById('form-status');
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+      status.className = 'form-status';
+      if (!form.checkValidity()) {
+        form.reportValidity();
+        status.textContent = 'Please check the fields and try again.';
+        status.classList.add('error');
+        return;
+      }
+      status.textContent = 'Thanks for your note! This demo form is validated, but messages are not sent from this page.';
+      status.classList.add('success');
+      form.reset();
+    });
+  </script>
+</body>
+</html>
