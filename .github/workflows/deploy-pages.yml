@@ -44,6 +44,7 @@ jobs:
       - name: Compile three independent FlowForge applications
         shell: bash
         run: |
+          set +e
           set -uo pipefail
           for model in inception haiku luna; do
             case "$model" in
@@ -56,6 +57,12 @@ jobs:
             mkdir -p "$target"
             echo "::group::$model"
             cd "$project"
+            if [ "$model" = "luna" ]; then
+              # The submitted project uses the floating "latest" React plugin,
+              # which has since become incompatible with its pinned Vite 6.
+              # Resolve a compatible build-tool version in CI only; do not edit source.
+              node -e "const fs=require('fs');let p=JSON.parse(fs.readFileSync('package.json','utf8'));p.dependencies['@vitejs/plugin-react']='4.4.1';fs.writeFileSync('package.json',JSON.stringify(p,null,2));"
+            fi
             if [ -f package-lock.json ]; then npm ci --no-audit --no-fund; else npm install --no-audit --no-fund; fi
             installed=$?
             if [ "$installed" -eq 0 ]; then npm run build -- --base "/Mercury/demos/$model/flowforge/"; built=$?; else built=1; fi
