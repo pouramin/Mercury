@@ -1,0 +1,106 @@
+name: Deploy Mercury benchmark and 11 source-based demos
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: mercury-pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Assemble showcase and eight standalone HTML demos
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p _site/prompts
+          cp index.html _site/index.html
+          cp prompts/*.txt _site/prompts/
+          touch _site/.nojekyll
+          mkdir -p _site/demos/inception/{coffee,todo,snake} _site/demos/haiku/{coffee,todo,snake} _site/demos/luna/{coffee,snake}
+          cp Inception/1-page/index.html _site/demos/inception/coffee/index.html
+          cp Inception/To-DO/todo.html _site/demos/inception/todo/index.html
+          cp Inception/Snake/index.html _site/demos/inception/snake/index.html
+          cp haiku/1-page/index.html _site/demos/haiku/coffee/index.html
+          cp haiku/To-DO/todo.html _site/demos/haiku/todo/index.html
+          cp haiku/Snake/snake.html _site/demos/haiku/snake/index.html
+          cp luna/1-page/index.html _site/demos/luna/coffee/index.html
+          cp luna/Snake/index.html _site/demos/luna/snake/index.html
+
+      - name: Compile three independent FlowForge applications
+        shell: bash
+        run: |
+          set -uo pipefail
+          for model in inception haiku luna; do
+            case "$model" in
+              inception) folder="Inception";;
+              haiku) folder="haiku";;
+              luna) folder="luna";;
+            esac
+            project="$GITHUB_WORKSPACE/$folder/final/mercury3-stress-test"
+            target="$GITHUB_WORKSPACE/_site/demos/$model/flowforge"
+            mkdir -p "$target"
+            echo "::group::$model"
+            cd "$project"
+            if [ -f package-lock.json ]; then npm ci --no-audit --no-fund; else npm install --no-audit --no-fund; fi
+            installed=$?
+            if [ "$installed" -eq 0 ]; then npm run build -- --base "/Mercury/demos/$model/flowforge/"; built=$?; else built=1; fi
+            if [ "$built" -eq 0 ] && [ -f dist/index.html ]; then
+              cp -R dist/. "$target/"
+              echo "Build succeeded: $model"
+            else
+              echo "::warning::FlowForge $model could not compile; original files untouched."
+              printf '%s\n' '<!doctype html><html lang="en"><meta charset="utf-8"><title>Build unavailable</title><body style="font:16px system-ui;padding:40px"><h1>Build unavailable</h1><p>This saved project did not compile. See the original repository source.</p><a href="https://github.com/pouramin/Mercury">View source</a></body></html>' > "$target/index.html"
+            fi
+            echo "::endgroup::"
+          done
+          cd "$GITHUB_WORKSPACE"
+
+      - name: Write actual build availability and validate routes
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          d=Path('_site/demos')
+          status={}
+          for key in ('inception','haiku','luna'):
+              f=d/key/'flowforge'/'index.html'
+              status[key]=f.is_file() and 'Build unavailable' not in f.read_text(encoding='utf-8')
+          (d/'build-status.json').write_text(json.dumps(status),encoding='utf-8')
+          print(status)
+          PY
+          test -s _site/index.html
+          test -s _site/prompts/4.txt
+          test -s _site/demos/luna/snake/index.html
+          test ! -e _site/demos/luna/todo/index.html
+          for model in inception haiku luna; do test -s "_site/demos/$model/flowforge/index.html"; done
+
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    environment:
+      name: github-pages
+      url: https://pouramin.dev/Mercury/
+    steps:
+      - uses: actions/deploy-pages@v4
