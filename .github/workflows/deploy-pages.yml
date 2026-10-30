@@ -108,6 +108,25 @@ jobs:
           test ! -e _site/demos/luna/todo/index.html
           for model in inception haiku luna; do test -s "_site/demos/$model/flowforge/index.html"; done
 
+      - name: Validate showcase JavaScript
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          from pathlib import Path
+          page=Path('_site/index.html').read_text(encoding='utf-8')
+          assert page.count('<script>')==1 and page.count('</script>')==1
+          Path('/tmp/mercury-site.js').write_text(page.split('<script>',1)[1].split('</script>',1)[0],encoding='utf-8')
+          PY
+          node --check /tmp/mercury-site.js
+
+      - name: Save complete build as downloadable artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: Mercury-site-preview
+          path: _site/
+          if-no-files-found: error
+
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
