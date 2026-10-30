@@ -108,6 +108,23 @@ jobs:
           test ! -e _site/demos/luna/todo/index.html
           for model in inception haiku luna; do test -s "_site/demos/$model/flowforge/index.html"; done
 
+      - name: Capture genuine output screenshots for resilient previews
+        shell: bash
+        run: |
+          set -euo pipefail
+          npm install --no-save --no-audit --no-fund --ignore-scripts --prefix /tmp/mercury-preview-tools playwright-core@1.56.1
+          mkdir -p .preview-root
+          ln -s "$GITHUB_WORKSPACE/_site" .preview-root/Mercury
+          python3 -m http.server 8765 --bind 127.0.0.1 --directory .preview-root > /tmp/mercury-preview-server.log 2>&1 &
+          server_pid=$!
+          trap 'kill "$server_pid" 2>/dev/null || true' EXIT
+          sleep 2
+          node scripts/capture-previews.cjs
+          for model in inception haiku luna; do
+            test -s "_site/previews/$model/flowforge.png"
+          done
+          test ! -e _site/previews/luna/todo.png
+
       - name: Validate showcase JavaScript
         shell: bash
         run: |
