@@ -1,0 +1,234 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#f7f9fd">
+<meta name="description" content="Mercury 3 coding experiment by TunnelLab. Four original prompts, 3 output collections, 11 saved results and interactive browser demos.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Mercury 3 — Four Prompts, Eleven Builds">
+<meta property="og:description" content="Explore the original coding prompts, 11 preserved source outputs and live browser demos.">
+<meta property="og:url" content="https://pouramin.dev/Mercury/">
+<title>Mercury 3 — Coding Experiment | TunnelLab</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Vazirmatn:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f7f9fd;--ink:#18253e;--muted:#718198;--line:#dfe6f1;--blue:#4265d6;--orange:#f47c48;--paper:#fff;--navy:#1b2b4a}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:110px}
+body{margin:0;color:var(--ink);background:var(--bg);font:15px/1.7 'DM Sans',sans-serif;-webkit-font-smoothing:antialiased}
+html[lang=fa] body{font-family:'Vazirmatn',Tahoma,sans-serif;line-height:1.95}
+a{color:inherit;text-decoration:none}button{font:inherit;cursor:pointer}a:focus-visible,button:focus-visible,summary:focus-visible{outline:3px solid var(--orange);outline-offset:3px}
+.wrap{max-width:1200px;padding-inline:28px;margin-inline:auto}
+.topline{height:6px;background:linear-gradient(90deg,var(--blue),#a4b8f0,var(--orange))}
+.site-header{position:sticky;z-index:30;top:0;background:#f7f9fdf3;backdrop-filter:blur(15px);border-bottom:1px solid var(--line)}
+.nav{display:flex;align-items:center;gap:22px;min-height:76px}
+.brand{display:flex;align-items:center;gap:11px;white-space:nowrap}
+.brandmark{background:var(--blue);width:43px;height:43px;color:white;border-radius:13px;display:grid;place-items:center;font-size:19px;font-weight:800;letter-spacing:-2px;font-family:'DM Sans',sans-serif}
+.brand b{display:block;font-size:18px;line-height:1.2;letter-spacing:-.8px;font-family:'DM Sans',sans-serif}
+.brand small{display:block;font:800 9px 'DM Sans',sans-serif;color:var(--muted);letter-spacing:.12em;margin-top:4px}
+.navlinks{display:flex;gap:26px;margin-inline:auto}
+.navlinks a{color:#64748f;font-size:12px;font-weight:800}.navlinks a:hover{color:var(--blue)}
+.nav-actions{display:flex;gap:9px}
+.lang,.nav-repo{padding:10px 14px;border-radius:10px;border:1px solid var(--line);background:white;color:var(--ink);font-size:12px;font-weight:800}
+.nav-repo{background:var(--navy);color:white;border-color:var(--navy)}
+.hero{display:grid;grid-template-columns:1.1fr .9fr;gap:55px;align-items:center;padding-block:89px 80px}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;padding:8px 13px;border:1px solid #f9d6c7;background:#fff0e8;color:#b95c37;border-radius:30px;font-size:11px;font-weight:800;letter-spacing:.1em}
+.eyebrow:before{content:"";width:8px;height:8px;background:var(--orange);border-radius:50%}
+h1{font-size:clamp(45px,5.5vw,75px);line-height:1.13;letter-spacing:-4px;margin:24px 0;font-weight:800}
+h1 em{font-style:normal;color:var(--blue)}h1 strong{color:var(--orange)}
+.hero p{color:var(--muted);font-size:17px;max-width:560px;line-height:1.85}
+.button-row{display:flex;flex-wrap:wrap;gap:10px;margin-top:27px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;border:1px solid var(--line);background:white;color:var(--ink);padding:13px 18px;border-radius:11px;font-size:12px;font-weight:800;transition:transform .2s,box-shadow .2s}
+.btn:hover{transform:translateY(-2px);box-shadow:0 10px 30px #223b6620}
+.btn.primary{background:var(--blue);border-color:var(--blue);color:white}
+.btn.pale{background:#fff0e8;color:#ac5431;border-color:#f5d4c7}
+.hero .tiny{color:#94a0b2;font-size:11px;margin-top:24px}
+.hero-art{border:1px solid #dfe7f6;border-radius:26px;background:linear-gradient(140deg,#ebf0ff,#f6eae7);padding:26px;min-height:394px;position:relative}
+.app-window{margin-top:35px;background:#1b2b4a;border-radius:15px;box-shadow:0 23px 50px #18283e38;transform:rotate(-3deg);overflow:hidden}
+.window-bar{height:39px;background:#fff;display:flex;align-items:center;gap:6px;padding:0 14px;color:#7a89a2;font:700 10px 'DM Sans',sans-serif}
+.window-bar i{width:7px;height:7px;border-radius:50%;background:#f3a38b}.window-bar i:nth-child(2){background:#f2cb90}.window-bar i:nth-child(3){background:#afd2bd}.window-bar span{margin-inline-start:12px}
+.app-content{padding:29px 22px 30px;color:#d9e7ff}
+.app-label{display:flex;justify-content:space-between;font-size:10px;color:#9eb5d6;gap:10px}
+.graph{display:flex;align-items:center;margin:26px 0;direction:ltr}
+.graph-node{display:grid;place-content:center;gap:4px;flex:0 0 28%;height:75px;background:#304a73;border:1px solid #667fa8;border-radius:10px;text-align:center;font-size:10px;font-weight:800}
+.graph-node.orange{background:#554053;border-color:#b68f73}.graph-node small{font-size:9px;color:#a8bad3}
+.graph-line{height:2px;background:#869bc0;flex:1;min-width:10px}
+.graph-chips{display:flex;flex-wrap:wrap;gap:7px;font-size:10px;color:#adbfdf}.graph-chips span{padding:5px 9px;border-radius:6px;border:1px solid #485e80}
+.float{position:absolute;background:white;padding:10px 14px;border:1px solid #e7eaf3;border-radius:10px;box-shadow:0 12px 29px #3044661b;color:#4c638f;font:800 11px 'DM Sans',sans-serif}
+.float.top{right:7px;top:15px;transform:rotate(4deg)}.float.bottom{left:9px;bottom:14px;transform:rotate(3deg)}
+.stats{background:white;border-block:1px solid var(--line)}
+.stats-row{display:grid;grid-template-columns:repeat(4,1fr);padding-block:28px}
+.stat{display:flex;align-items:center;justify-content:center;gap:12px;border-inline-end:1px solid var(--line)}.stat:last-child{border:0}
+.stat b{font-size:38px;line-height:1;letter-spacing:-1.5px}.stat span{max-width:102px;font-size:11px;color:var(--muted);font-weight:700;line-height:1.55}
+.section{padding-block:90px}.section-title{display:flex;justify-content:space-between;gap:28px;align-items:end;margin-bottom:27px}
+.kicker{color:var(--blue);font-size:11px;font-weight:800;letter-spacing:.13em}
+h2{font-size:clamp(31px,4vw,46px);line-height:1.25;letter-spacing:-2px;margin:11px 0 0}
+.section-title p{max-width:445px;color:var(--muted);line-height:1.9;font-size:13px;margin:0}
+.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.taskcard{border:1px solid var(--line);background:white;border-radius:17px;text-align:start;padding:0;min-width:0;overflow:hidden;transition:.2s}
+.taskcard:hover{transform:translateY(-3px);box-shadow:0 15px 35px #21345216}
+.taskcard.active{border-color:#7390f0;box-shadow:0 0 0 3px #4265d617}
+.task-art{height:154px;background:linear-gradient(130deg,#e8eeff,#d6e1fa);position:relative;padding:16px;overflow:hidden}
+.taskcard[data-task=coffee] .task-art{background:linear-gradient(130deg,#eee2d3,#f2cdb8)}
+.taskcard[data-task=todo] .task-art{background:linear-gradient(130deg,#e8f3ea,#c8ded2)}
+.taskcard[data-task=snake] .task-art{background:linear-gradient(130deg,#e7eafe,#c5d1ef)}
+.art-number{font-size:10px;font-weight:800;border-radius:20px;background:#fff;padding:5px 9px;display:inline-block;color:#596b83;font-family:'DM Sans',sans-serif}
+.art-window{position:absolute;top:55px;left:12%;width:76%;height:125px;background:#fff;border-radius:9px;box-shadow:0 10px 24px #1e32462c;transform:rotate(-5deg);padding:15px}
+.art-window i{display:block;height:8px;background:#b2c6e6;border-radius:5px;margin-bottom:10px}
+.art-window i:nth-child(1){width:45%;background:#567ac7}.art-window i:nth-child(2){width:75%}.art-window i:nth-child(3){width:62%}
+.taskcard[data-task=coffee] .art-window,.taskcard[data-task=snake] .art-window{background:#23334c}
+.taskcard[data-task=coffee] .art-window i{background:#bfa186}.taskcard[data-task=snake] .art-window i{background:#81b6ac}
+.taskcard[data-task=flowforge] .art-window{background:#1f2c49;display:flex;gap:9px;align-items:center}.taskcard[data-task=flowforge] .art-window i{height:35px;flex:1;background:#667ba6;margin:0}
+.taskcard[data-task=flowforge] .art-window i:nth-child(2){background:#ad8a7e}
+.task-copy{padding:21px}.task-copy small{font-size:10px;font-weight:800;color:var(--orange);letter-spacing:.08em}
+.task-copy h3{font-size:18px;margin:7px 0;letter-spacing:-.45px}
+.task-copy p{color:var(--muted);font-size:12px;line-height:1.75;min-height:65px;margin-bottom:15px}
+.task-footer{border-top:1px solid #e9edf5;padding-top:13px;font-size:11px;font-weight:800;color:var(--blue);display:flex;justify-content:space-between}
+.explorer{margin-top:28px;background:white;border:1px solid var(--line);border-radius:19px;overflow:hidden;box-shadow:0 18px 50px #2535520a}
+.explorer-top{background:#fafbff;border-bottom:1px solid var(--line);padding:21px 25px;display:flex;justify-content:space-between;align-items:center;gap:18px;flex-wrap:wrap}
+.explorer-top h3{font-size:23px;margin:0;letter-spacing:-.6px}
+.explorer-top p{font-size:12px;color:var(--muted);margin:3px 0 0}
+.switch{padding:5px;background:#edf1f8;border:1px solid #dce3ef;border-radius:11px;display:flex;gap:4px;direction:ltr}
+.switch button{background:none;border:0;font-size:12px;font-weight:800;padding:9px 14px;border-radius:8px;color:#71809c}
+.switch button.active{background:#fff;color:#3255c3;box-shadow:0 2px 8px #192a4515}
+.explorer-body{padding:24px;display:grid;grid-template-columns:minmax(0,1fr) 275px;gap:25px}
+.demo-poster{border-radius:13px;border:1px solid #d9e2f0;background:radial-gradient(circle at 50% 0,#f8faff,#e7eefa);overflow:hidden}
+.poster-bar{background:white;border-bottom:1px solid var(--line);height:36px;display:flex;align-items:center;padding:0 15px;gap:5px;direction:ltr}
+.poster-bar i{width:7px;height:7px;border-radius:50%;background:#e9ad99}.poster-bar i:nth-child(2){background:#e9d3a1}.poster-bar i:nth-child(3){background:#b3d7c5}
+.poster-bar span{font:700 10px 'DM Sans',sans-serif;color:#9ba8bb;margin-left:10px}
+.poster-center{min-height:310px;display:grid;place-content:center;text-align:center;padding:34px;justify-items:center}
+.poster-icon{width:76px;height:76px;background:white;border:1px solid #dce6f2;border-radius:22px;display:grid;place-items:center;font-size:34px;color:var(--blue);box-shadow:0 15px 25px #1f396318;margin-bottom:17px}
+.poster-center h3{font-size:25px;margin:0 0 11px}
+.poster-center p{font-size:13px;color:var(--muted);max-width:430px;margin:0}
+.detail small{font-size:10px;color:var(--blue);font-weight:800;letter-spacing:.1em}
+.detail h3{font-size:27px;line-height:1.3;margin:10px 0}
+.detail p{font-size:13px;color:var(--muted);line-height:1.85}
+.detail ul{margin:19px 0;padding-inline-start:21px;font-size:12px;color:#66758f;line-height:2}
+.detail-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.detail-actions .btn{padding:11px 9px;font-size:11px}.detail-actions .primary{grid-column:span 2}
+.warning{background:#fff2ea;color:#af5b35;border:1px solid #f6d5c6;font-size:12px;padding:13px;border-radius:10px;margin-top:15px}
+.note{background:#fff2e9;border:1px solid #f5d7c5;color:#955b41;font-size:12px;line-height:1.9;padding:18px 22px;margin-top:19px;border-radius:13px}
+.prompt-section{background:#eef2f9;border-block:1px solid var(--line)}
+.prompt-list{display:grid;gap:11px}
+.prompt{background:#fff;border:1px solid #dce4f0;border-radius:13px;overflow:hidden}
+.prompt summary{list-style:none;display:flex;align-items:center;gap:14px;cursor:pointer;padding:20px}
+.prompt summary::-webkit-details-marker{display:none}
+.prompt summary:after{content:"+";font-size:25px;color:var(--orange);margin-inline-start:auto}
+.prompt[open] summary:after{content:"−"}
+.prompt-number{font:800 12px 'DM Sans',sans-serif;color:var(--blue);background:#edf1ff;padding:7px 10px;border-radius:9px}
+.prompt-name{font-weight:800;font-size:15px}
+.prompt-content{padding:17px;border-top:1px solid var(--line)}
+.prompt-tools{display:flex;justify-content:flex-end;gap:9px;margin-bottom:12px;direction:ltr}
+.prompt-tools .btn{padding:9px 13px;font-size:11px}
+.prompt pre{color:#e8edf9;background:#1b2a44;border-radius:12px;margin:0;white-space:pre-wrap;overflow-wrap:anywhere;max-height:470px;overflow:auto;padding:23px;direction:ltr;text-align:left;font:12px/1.85 Consolas,monospace}
+.method-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:28px}
+.method-grid article{border:1px solid var(--line);border-radius:15px;background:#fff;padding:27px}
+.method-grid article small{font-size:10px;color:var(--orange);font-weight:800;letter-spacing:.1em}
+.method-grid h3{font-size:18px;margin:10px 0 8px}
+.method-grid p{font-size:12px;color:var(--muted);line-height:1.9;margin:0}
+.cta{background:var(--navy);color:white;border-radius:16px;padding:27px 30px;margin-top:29px;display:flex;gap:20px;align-items:center;justify-content:space-between}
+.cta b{font-size:19px}.cta p{color:#b5c2d8;font-size:12px;margin:7px 0 0}
+.footer{border-top:1px solid var(--line);padding-block:30px 50px;display:flex;justify-content:space-between;gap:15px;color:var(--muted);font-size:11px}.footer a{color:var(--blue);font-weight:800}
+html[lang=fa] :is(h1,h2,h3){letter-spacing:0;line-height:1.5}html[lang=fa] .kicker,html[lang=fa] .eyebrow{letter-spacing:0}
+html[lang=fa] .navlinks{margin-inline:auto}
+@media(max-width:1050px){.hero{gap:25px}.cards{grid-template-columns:repeat(2,1fr)}.navlinks{gap:14px}.explorer-body{grid-template-columns:1fr 245px}}
+@media(max-width:800px){.wrap{padding-inline:20px}.navlinks{display:none}.hero{grid-template-columns:1fr;padding-block:64px}.hero-art{max-width:610px;width:100%;margin:auto;min-height:350px}.section{padding-block:63px}.section-title{display:block}.section-title p{margin-top:12px}.explorer-body{grid-template-columns:1fr}.method-grid{grid-template-columns:1fr}.stats-row{grid-template-columns:repeat(2,1fr);gap:23px}.stat:nth-child(2){border:0}.cta{flex-direction:column;align-items:flex-start}}
+@media(max-width:520px){.wrap{padding-inline:16px}.nav{min-height:69px;gap:9px}.brandmark{width:38px;height:38px}.brand b{font-size:15px}.brand small{font-size:8px}.nav-actions{margin-inline-start:auto;gap:5px}.lang,.nav-repo{padding:9px;font-size:11px}h1{font-size:45px;letter-spacing:-2.5px}.hero p{font-size:14px}.hero-art{padding:15px;min-height:310px}.app-content{padding:20px 12px}.graph-node{font-size:9px}.float{font-size:9px}.cards{grid-template-columns:1fr}.taskcard{display:grid;grid-template-columns:125px 1fr}.task-art{height:100%}.task-copy{padding:17px}.task-copy p{min-height:0}.task-copy h3{font-size:16px}.task-art .art-window{top:67px}.explorer-top,.explorer-body{padding:17px}.switch{width:100%;justify-content:space-evenly}.switch button{flex:1;padding:9px}.poster-center{min-height:260px}.stat b{font-size:30px}.stat span{font-size:10px}.prompt summary{padding:16px}.prompt pre{padding:17px;font-size:11px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.btn,.taskcard{transition:none}.btn:hover,.taskcard:hover{transform:none}}
+</style>
+</head>
+<body>
+<div class="topline"></div>
+<header class="site-header"><div class="wrap nav">
+<a class="brand" href="#top"><span class="brandmark">M3</span><span><b>Mercury 3</b><small>TUNNELLAB / CODE LAB</small></span></a>
+<nav class="navlinks"><a href="#challenges" data-i="navChallenges">Challenges</a><a href="#explorer" data-i="navExplore">Live demos</a><a href="#prompts" data-i="navPrompts">Prompts</a><a href="#method" data-i="navMethod">Method</a></nav>
+<div class="nav-actions"><button id="language" class="lang" type="button">فارسی</button><a class="nav-repo" href="https://github.com/pouramin/Mercury" target="_blank" rel="noopener noreferrer">GitHub ↗</a></div>
+</div></header>
+<main id="top">
+<div class="wrap hero">
+<div><div class="eyebrow" data-i="eyebrow">TUNNELLAB · REAL CODING EXPERIMENT</div><h1 data-i="headline">Mercury 3.<br><em>Four prompts.</em><br><strong>Real results.</strong></h1>
+<p data-i="heroText">A simple coffee shop, a to-do app, a Snake game, and a full workflow automation studio. Compare the original files, explore the runnable demos and copy every prompt.</p>
+<div class="button-row"><a class="btn primary" href="#explorer" data-i="openDemos">Explore live demos ↗</a><a class="btn" href="#prompts" data-i="allPrompts">All 4 prompts ↓</a><a class="btn pale" href="https://github.com/pouramin/Mercury" target="_blank" rel="noopener noreferrer" data-i="github">Source on GitHub ↗</a></div>
+<p class="tiny" data-i="disclaimer">Evidence-first: no invented benchmark scores, prices or timing.</p>
+</div>
+<div class="hero-art"><div class="float top">04 / FLOWFORGE STUDIO</div><div class="app-window"><div class="window-bar"><i></i><i></i><i></i><span>flowforge / workflow.json</span></div><div class="app-content"><div class="app-label"><span>Order processing</span><span>300 sample orders</span></div><div class="graph"><div class="graph-node">SOURCE<small>300 records</small></div><div class="graph-line"></div><div class="graph-node">TRANSFORM<small>order total</small></div><div class="graph-line"></div><div class="graph-node orange">CONDITION<small>true / false</small></div></div><div class="graph-chips"><span>START</span><span>FILTER</span><span>DELAY</span><span>OUTPUT</span></div></div></div><div class="float bottom">01 / 02 / 03 / 04</div></div>
+</div>
+<div class="stats"><div class="wrap stats-row"><div class="stat"><b>4</b><span data-i="sPrompts">Original prompts</span></div><div class="stat"><b>3</b><span data-i="sFolders">Output folders</span></div><div class="stat"><b>11</b><span data-i="sOutputs">Stored output projects</span></div><div class="stat"><b>3</b><span data-i="sApps">FlowForge versions</span></div></div></div>
+<section class="section wrap" id="challenges">
+<div class="section-title"><div><span class="kicker" data-i="set">THE CHALLENGES</span><h2 data-i="challenges">Four levels of difficulty.</h2></div><p data-i="aboutSet">All four prompts are available unchanged. The repository contains Inception, Haiku and Luna result folders. One requested output is absent.</p></div>
+<div class="cards">
+<button class="taskcard active" type="button" data-task="coffee" aria-pressed="true"><div class="task-art"><span class="art-number">01 / HTML</span><div class="art-window"><i></i><i></i><i></i></div></div><div class="task-copy"><small>TEST 01</small><h3 data-i="coffee">Tunnel Coffee</h3><p data-i="coffeeD">Responsive coffee website with a menu, hours and contact form.</p><div class="task-footer"><span data-i="view">View results</span>↗</div></div></button>
+<button class="taskcard" type="button" data-task="todo" aria-pressed="false"><div class="task-art"><span class="art-number">02 / STORAGE</span><div class="art-window"><i></i><i></i><i></i></div></div><div class="task-copy"><small>TEST 02</small><h3 data-i="todo">To-do App</h3><p data-i="todoD">Editable tasks, filters and persistent browser storage.</p><div class="task-footer"><span data-i="view">View results</span>↗</div></div></button>
+<button class="taskcard" type="button" data-task="snake" aria-pressed="false"><div class="task-art"><span class="art-number">03 / CANVAS</span><div class="art-window"><i></i><i></i><i></i></div></div><div class="task-copy"><small>TEST 03</small><h3 data-i="snake">Snake Game</h3><p data-i="snakeD">Keyboard controls, score, pause and increasing difficulty.</p><div class="task-footer"><span data-i="view">View results</span>↗</div></div></button>
+<button class="taskcard" type="button" data-task="flowforge" aria-pressed="false"><div class="task-art"><span class="art-number">04 / REACT + TS</span><div class="art-window"><i></i><i></i><i></i></div></div><div class="task-copy"><small>TEST 04</small><h3>FlowForge Studio</h3><p data-i="flowD">Visual workflow engine with a real editor and automated tests.</p><div class="task-footer"><span data-i="view">View results</span>↗</div></div></button>
+</div>
+<div class="explorer" id="explorer">
+<div class="explorer-top"><div><h3 data-i="exploreTitle">Explore the actual builds</h3><p data-i="exploreSub">Choose a version and open the original generated result.</p></div><div class="switch"><button class="active" type="button" data-model="inception" aria-pressed="true">Inception</button><button type="button" data-model="haiku" aria-pressed="false">Haiku</button><button type="button" data-model="luna" aria-pressed="false">Luna</button></div></div>
+<div class="explorer-body"><div class="demo-poster"><div class="poster-bar"><i></i><i></i><i></i><span id="pathLabel">mercury / inception / coffee</span></div><div class="poster-center"><div class="poster-icon" id="icon">☕</div><h3 id="demoTitle">Tunnel Coffee</h3><p id="demoText">Open the generated project in a new tab to interact with the original result.</p></div></div>
+<div class="detail"><small data-i="selected">SELECTED RESULT</small><h3 id="selection">Inception / Tunnel Coffee</h3><p id="description"></p><ul><li data-i="preserved">Original generated files preserved</li><li data-i="hosted">Individual runnable demo routes</li><li data-i="traceable">Source linked to the exact folder</li></ul>
+<div class="detail-actions"><a id="demoLink" class="btn primary" href="./demos/inception/coffee/" target="_blank" rel="noopener noreferrer" data-i="launch">Launch live demo ↗</a><a id="sourceLink" class="btn" href="https://github.com/pouramin/Mercury/tree/main/Inception/1-page" target="_blank" rel="noopener noreferrer" data-i="source">View source ↗</a><a id="promptLink" class="btn" href="#prompts" data-i="prompt">View prompt ↓</a></div><div class="warning" id="warning" hidden></div></div></div>
+</div>
+<p class="note"><strong data-i="noteHead">Fair comparison:</strong> <span data-i="noteBody">These are the actual saved source projects, not a verified leaderboard. No speed, token use or cost figures have been fabricated. A build may have limitations; open the demo to evaluate it yourself.</span></p>
+</section>
+<section class="section prompt-section" id="prompts"><div class="wrap"><div class="section-title"><div><span class="kicker" data-i="promptSource">PRIMARY SOURCES</span><h2 data-i="promptHeading">Every original prompt.</h2></div><p data-i="promptDesc">The exact text supplied for the experiment, available to inspect, copy or download.</p></div><div class="prompt-list">
+<details class="prompt" data-number="1"><summary><span class="prompt-number">01</span><span class="prompt-name" data-i="coffee">Tunnel Coffee</span></summary><div class="prompt-content"><div class="prompt-tools"><a class="btn" href="./prompts/1.txt" download>Download .txt ↓</a><button class="btn copy" type="button">Copy prompt</button></div><pre>Loading…</pre></div></details>
+<details class="prompt" data-number="2"><summary><span class="prompt-number">02</span><span class="prompt-name" data-i="todo">To-do App</span></summary><div class="prompt-content"><div class="prompt-tools"><a class="btn" href="./prompts/2.txt" download>Download .txt ↓</a><button class="btn copy" type="button">Copy prompt</button></div><pre>Loading…</pre></div></details>
+<details class="prompt" data-number="3"><summary><span class="prompt-number">03</span><span class="prompt-name" data-i="snake">Snake Game</span></summary><div class="prompt-content"><div class="prompt-tools"><a class="btn" href="./prompts/3.txt" download>Download .txt ↓</a><button class="btn copy" type="button">Copy prompt</button></div><pre>Loading…</pre></div></details>
+<details class="prompt" data-number="4"><summary><span class="prompt-number">04</span><span class="prompt-name">FlowForge Studio</span></summary><div class="prompt-content"><div class="prompt-tools"><a class="btn" href="./prompts/4.txt" download>Download .txt ↓</a><button class="btn copy" type="button">Copy prompt</button></div><pre>Loading…</pre></div></details>
+</div></div></section>
+<section class="section wrap" id="method"><div class="section-title"><div><span class="kicker" data-i="methodK">TRANSPARENT METHOD</span><h2 data-i="methodH">Inspect. Run. Compare.</h2></div><p data-i="methodP">We link directly to the original saved files. The generated implementation code is not rewritten for this showcase.</p></div>
+<div class="method-grid"><article><small>01 / INPUT</small><h3 data-i="m1">Identical task briefs</h3><p data-i="m1d">Four original prompt files are published without edits.</p></article><article><small>02 / SOURCE</small><h3 data-i="m2">Preserved outputs</h3><p data-i="m2d">Each source folder is isolated. If a project is absent, we clearly show that.</p></article><article><small>03 / REALITY</small><h3 data-i="m3">Try the actual software</h3><p data-i="m3d">The HTML demos are copied unchanged; the three FlowForge apps are compiled independently.</p></article></div>
+<div class="cta"><div><b data-i="ctaH">Want the complete code?</b><p data-i="ctaP">View every source file, automated test and the GitHub Pages deployment script.</p></div><a class="btn" href="https://github.com/pouramin/Mercury" target="_blank" rel="noopener noreferrer" data-i="ctaLink">Explore the repository ↗</a></div>
+</section>
+</main><footer class="footer wrap"><span>© 2026 TunnelLab · Mercury 3 coding experiment</span><span><a href="https://pouramin.dev/">pouramin.dev</a> · <a href="https://github.com/pouramin/Mercury">GitHub</a></span></footer>
+<script>
+(function(){
+'use strict';
+var tasks=['coffee','todo','snake','flowforge'];
+var label={coffee:'Tunnel Coffee',todo:'To-do App',snake:'Snake Game',flowforge:'FlowForge Studio'};
+var icons={coffee:'☕',todo:'✓',snake:'▦',flowforge:'⌘'};
+var folders={inception:{coffee:'Inception/1-page',todo:'Inception/To-DO',snake:'Inception/Snake',flowforge:'Inception/final/mercury3-stress-test'},haiku:{coffee:'haiku/1-page',todo:'haiku/To-DO',snake:'haiku/Snake',flowforge:'haiku/final/mercury3-stress-test'},luna:{coffee:'luna/1-page',snake:'luna/Snake',flowforge:'luna/final/mercury3-stress-test'}};
+var trans={
+en:{navChallenges:'Challenges',navExplore:'Live demos',navPrompts:'Prompts',navMethod:'Method',eyebrow:'TUNNELLAB · REAL CODING EXPERIMENT',headline:'Mercury 3.<br><em>Four prompts.</em><br><strong>Real results.</strong>',heroText:'A simple coffee shop, a to-do app, a Snake game, and a full workflow automation studio. Compare the original files, explore the runnable demos and copy every prompt.',openDemos:'Explore live demos ↗',allPrompts:'All 4 prompts ↓',github:'Source on GitHub ↗',disclaimer:'Evidence-first: no invented benchmark scores, prices or timing.',sPrompts:'Original prompts',sFolders:'Output folders',sOutputs:'Stored output projects',sApps:'FlowForge versions',set:'THE CHALLENGES',challenges:'Four levels of difficulty.',aboutSet:'All four prompts are available unchanged. The repository contains Inception, Haiku and Luna result folders. One requested output is absent.',coffee:'Tunnel Coffee',coffeeD:'Responsive coffee website with a menu, hours and contact form.',todo:'To-do App',todoD:'Editable tasks, filters and persistent browser storage.',snake:'Snake Game',snakeD:'Keyboard controls, score, pause and increasing difficulty.',flowD:'Visual workflow engine with a real editor and automated tests.',view:'View results',exploreTitle:'Explore the actual builds',exploreSub:'Choose a version and open the original generated result.',selected:'SELECTED RESULT',preserved:'Original generated files preserved',hosted:'Individual runnable demo routes',traceable:'Source linked to the exact folder',launch:'Launch live demo ↗',source:'View source ↗',prompt:'View prompt ↓',noteHead:'Fair comparison:',noteBody:'These are the actual saved source projects, not a verified leaderboard. No speed, token use or cost figures have been fabricated. A build may have limitations; open the demo to evaluate it yourself.',promptSource:'PRIMARY SOURCES',promptHeading:'Every original prompt.',promptDesc:'The exact text supplied for the experiment, available to inspect, copy or download.',methodK:'TRANSPARENT METHOD',methodH:'Inspect. Run. Compare.',methodP:'We link directly to the original saved files. The generated implementation code is not rewritten for this showcase.',m1:'Identical task briefs',m1d:'Four original prompt files are published without edits.',m2:'Preserved outputs',m2d:'Each source folder is isolated. If a project is absent, we clearly show that.',m3:'Try the actual software',m3d:'The HTML demos are copied unchanged; the three FlowForge apps are compiled independently.',ctaH:'Want the complete code?',ctaP:'View every source file, automated test and the GitHub Pages deployment script.',ctaLink:'Explore the repository ↗',stage:'Open the generated project in a new tab to interact with the original result.',unavailable:'This output is not present in the repository.',buildFailed:'The source exists, but this build did not compile. The source link is still available.',copy:'Copy prompt',copied:'Copied!',download:'Download .txt ↓',description:{coffee:'A responsive single-file landing page for a fictional coffee shop.',todo:'An editable to-do application with filters and browser persistence.',snake:'A canvas game with keyboard controls and a saved high score.',flowforge:'A full visual workflow automation platform written in React and TypeScript.'}},
+fa:{navChallenges:'تست‌ها',navExplore:'دموهای واقعی',navPrompts:'پرامپت‌ها',navMethod:'روش بررسی',eyebrow:'تونل‌لب · آزمایش واقعی کدنویسی',headline:'مرکوری 3.<br><em>4 پرامپت.</em><br><strong>خروجی واقعی.</strong>',heroText:'از سایت کافه و برنامه کارها تا بازی مار و یک برنامه کامل اتوماسیون. خروجی‌ها رو اجرا کن، سورسشون رو ببین و پرامپت‌های اصلی رو بردار.',openDemos:'دیدن دموها ↗',allPrompts:'دیدن 4 پرامپت ↓',github:'سورس در گیت‌هاب ↗',disclaimer:'بدون امتیاز، قیمت یا زمان ساختگی.',sPrompts:'پرامپت اصلی',sFolders:'پوشه خروجی',sOutputs:'پروژه ثبت‌شده',sApps:'نسخه برنامه گردش‌کار',set:'مجموعه تست‌ها',challenges:'4 سطح مختلف سختی.',aboutSet:'هر 4 پرامپت بدون تغییر قرار گرفتن. خروجی‌ها در 3 پوشه جدا هستن و 1 خروجی در ریپو وجود نداره.',coffee:'سایت کافه',coffeeD:'سایت واکنش‌گرا با منو، ساعت کاری و فرم تماس.',todo:'برنامه کارها',todoD:'ویرایش، فیلتر و ذخیره‌سازی کارها در مرورگر.',snake:'بازی مار',snakeD:'کنترل با کیبورد، امتیاز و سختی بیشتر.',flowD:'موتور گردش‌کار، ویرایشگر گرافیکی و تست خودکار.',view:'دیدن خروجی',exploreTitle:'خروجی‌های واقعی رو بررسی کن',exploreSub:'نسخه رو انتخاب کن و دمو یا سورس همون پروژه رو باز کن.',selected:'خروجی انتخاب‌شده',preserved:'فایل‌های اصلی مدل‌ها تغییر نکردن',hosted:'دموها جداگانه اجرا می‌شن',traceable:'لینک دقیق پوشه سورس موجوده',launch:'اجرای دموی واقعی ↗',source:'مشاهده سورس ↗',prompt:'پرامپت اصلی ↓',noteHead:'مقایسه منصفانه:',noteBody:'این‌ها خروجی‌های ذخیره‌شده هستن، نه رتبه‌بندی قطعی. برای سرعت، توکن و هزینه عدد ساختگی ثبت نشده. خودت برنامه‌ها رو اجرا و بررسی کن.',promptSource:'فایل‌های اصلی',promptHeading:'همه پرامپت‌های اصلی.',promptDesc:'متن 4 فایل بدون تغییر در دسترسه. می‌تونی کپی یا دانلودشون کنی.',methodK:'روش تست',methodH:'ببین، اجرا کن، مقایسه کن.',methodP:'لینک مستقیم فایل‌های اصلی رو گذاشتیم. سورس ساخته‌شده برای نمایش این سایت بازنویسی نشده.',m1:'صورت مسئله یکسان',m1d:'4 پرامپت اصلی دقیقاً همون‌طور که داده شدن موجودن.',m2:'خروجی دست‌نخورده',m2d:'هر پروژه توی پوشه خودش مونده و خروجی غایب هم مشخصه.',m3:'نرم‌افزار قابل اجرا',m3d:'دموهای تک‌فایلی مستقیم و پروژه‌های نهایی از سورس خودشون ساخته می‌شن.',ctaH:'می‌خوای کدها رو بررسی کنی؟',ctaP:'همه فایل‌ها، تست‌ها و تنظیمات انتشار توی ریپو موجوده.',ctaLink:'دیدن ریپو ↗',stage:'خروجی اصلی رو توی تب جدا باز کن و خودت تستش کن.',unavailable:'این خروجی داخل ریپو وجود نداره.',buildFailed:'سورس این پروژه هست، ولی ساخت دموی آن موفق نبوده. سورس رو می‌تونی ببینی.',copy:'کپی پرامپت',copied:'کپی شد!',download:'دانلود متن ↓',description:{coffee:'سایت کافه با همه فایل‌های اصلی ثبت‌شده.',todo:'برنامه مدیریت کارها با فیلتر و ذخیره اطلاعات.',snake:'بازی مار با کیبورد و رکورد ذخیره‌شده.',flowforge:'برنامه گردش‌کار با رابط گرافیکی و موتور اجرای واقعی.'}}
+};
+var lang='en',model='inception',task='coffee',builds=null;
+var taskButtons=Array.from(document.querySelectorAll('[data-task]'));
+var modelButtons=Array.from(document.querySelectorAll('[data-model]'));
+function update(){
+ var t=trans[lang],src=folders[model][task],valid=Boolean(src),failed=task==='flowforge'&&builds&&builds[model]===false;
+ document.documentElement.lang=lang;document.documentElement.dir=lang==='fa'?'rtl':'ltr';
+ document.querySelectorAll('[data-i]').forEach(function(el){var key=el.dataset.i;if(t[key]!==undefined)el.innerHTML=t[key];});
+ document.getElementById('language').textContent=lang==='en'?'فارسی':'English';
+ taskButtons.forEach(function(el){var a=el.dataset.task===task;el.classList.toggle('active',a);el.setAttribute('aria-pressed',String(a));});
+ modelButtons.forEach(function(el){var a=el.dataset.model===model;el.classList.toggle('active',a);el.setAttribute('aria-pressed',String(a));});
+ document.getElementById('pathLabel').textContent='mercury / '+model+' / '+task;
+ document.getElementById('icon').textContent=icons[task];
+ document.getElementById('demoTitle').textContent=label[task]+' · '+model.charAt(0).toUpperCase()+model.slice(1);
+ document.getElementById('demoText').textContent=valid?t.stage:t.unavailable;
+ document.getElementById('selection').textContent=model.charAt(0).toUpperCase()+model.slice(1)+' / '+label[task];
+ document.getElementById('description').textContent=t.description[task];
+ var demo=document.getElementById('demoLink'),code=document.getElementById('sourceLink'),warning=document.getElementById('warning');
+ demo.hidden=!valid||failed;code.hidden=!valid;warning.hidden=valid&&!failed;
+ if(!valid||failed)warning.textContent=failed?t.buildFailed:t.unavailable;
+ if(valid){demo.href='./demos/'+model+'/'+task+'/';code.href='https://github.com/pouramin/Mercury/tree/main/'+src;}
+ document.querySelectorAll('.copy').forEach(function(btn){btn.textContent=t.copy});
+ document.querySelectorAll('.prompt-tools a').forEach(function(a){a.textContent=t.download});
+}
+taskButtons.forEach(function(el){el.addEventListener('click',function(){task=el.dataset.task;update();document.getElementById('explorer').scrollIntoView({behavior:'smooth'});});});
+modelButtons.forEach(function(el){el.addEventListener('click',function(){model=el.dataset.model;update();});});
+document.getElementById('language').addEventListener('click',function(){lang=lang==='en'?'fa':'en';update();});
+document.getElementById('promptLink').addEventListener('click',function(){var el=document.querySelector('.prompt[data-number="'+String(tasks.indexOf(task)+1)+'"]');if(el)el.open=true;});
+var cache={};
+async function getPrompt(id){if(cache[id])return cache[id];var r=await fetch('./prompts/'+id+'.txt');if(!r.ok)throw Error('Unavailable');cache[id]=await r.text();return cache[id];}
+document.querySelectorAll('.prompt').forEach(function(el){
+ var id=el.dataset.number,pre=el.querySelector('pre');
+ el.addEventListener('toggle',async function(){if(!el.open)return;try{pre.textContent=await getPrompt(id)}catch(e){pre.textContent='Unable to load prompt. Try downloading the text file.';}});
+ el.querySelector('.copy').addEventListener('click',async function(){var button=this;try{await navigator.clipboard.writeText(await getPrompt(id));button.textContent=trans[lang].copied;setTimeout(function(){button.textContent=trans[lang].copy},1600)}catch(e){button.textContent='Copy unavailable';}});
+});
+fetch('./demos/build-status.json',{cache:'no-store'}).then(function(r){return r.ok?r.json():null}).then(function(x){if(x){builds=x;update()}}).catch(function(){});
+update();
+})();
+</script></body></html>
