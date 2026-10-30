@@ -65,7 +65,17 @@ jobs:
             fi
             if [ -f package-lock.json ]; then npm ci --no-audit --no-fund; else npm install --no-audit --no-fund; fi
             installed=$?
-            if [ "$installed" -eq 0 ]; then npm run build -- --base "/Mercury/demos/$model/flowforge/"; built=$?; else built=1; fi
+            if [ "$installed" -eq 0 ]; then
+              npm run build -- --base "/Mercury/demos/$model/flowforge/"
+              built=$?
+              if [ "$built" -ne 0 ] && [ "$model" = "luna" ]; then
+                echo "::warning::Luna has original TypeScript type errors. Trying Vite transpilation for browser demo only (no source edits)."
+                npx vite build --base "/Mercury/demos/$model/flowforge/"
+                built=$?
+              fi
+            else
+              built=1
+            fi
             if [ "$built" -eq 0 ] && [ -f dist/index.html ]; then
               cp -R dist/. "$target/"
               echo "Build succeeded: $model"
